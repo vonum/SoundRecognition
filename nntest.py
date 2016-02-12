@@ -25,8 +25,8 @@ ann = Sequential()
 
 ann.add(Dense(input_dim=15, output_dim=64,init="glorot_uniform"))
 ann.add(Activation("sigmoid"))
-#ann.add(Dense(input_dim=128, output_dim=128,init="glorot_uniform"))
-#ann.add(Activation("sigmoid"))
+ann.add(Dense(input_dim=64, output_dim=64,init="glorot_uniform"))
+ann.add(Activation("sigmoid"))
 ann.add(Dense(input_dim=64, output_dim=4,init="glorot_uniform"))
 ann.add(Activation("sigmoid"))
 
@@ -34,7 +34,7 @@ ann.add(Activation("sigmoid"))
 sgd = SGD(lr=0.01, momentum=0.9)
 ann.compile(loss='mean_squared_error', optimizer=sgd)
 
-ann.fit(X, Y, nb_epoch=5000, batch_size=90, verbose = 0, shuffle=False, show_accuracy = False)
+ann.fit(X, Y, nb_epoch=3000, batch_size=100, verbose = 0, shuffle=False, show_accuracy = False)
 
 
 amptest = []
@@ -42,7 +42,7 @@ amptest = []
 fst, datat = read('440test.wav', mmap = False)
 datat = datat[0:9600]
 testfft = calculatefft(fst, datat)[0]
-testfft = testfft/10000000000
+#testfft = testfft/10000000000
 
 #amptest.append(testfft[test.astype(np.int64)])
 amptest.append(localmax(testfft, test.astype(np.int64)))
@@ -50,7 +50,7 @@ amptest.append(localmax(testfft, test.astype(np.int64)))
 fst, datat = read('330test.wav', mmap = False)
 datat = datat[0:9600]
 testfft = calculatefft(fst, datat)[0]
-testfft = testfft/10000000000
+#testfft = testfft/10000000000
 
 amptest.append(localmax(testfft, test.astype(np.int64)))
 

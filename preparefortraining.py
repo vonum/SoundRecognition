@@ -27,18 +27,18 @@ def prepare_data(filename):
 	#prvi ton
 	fs, data = read(filename, mmap=False)
 
-	for i in range(0, 1200):
+	for i in range(0, 3000):
 		timedata.append(data[i*chunk:i*chunk+chunk])
 
 	#drugi ton
 	fs, data = read('training660.wav')
 
-	for i in range(0, 1200):
+	for i in range(0, 3000):
 		timedata.append(data[i*chunk:i*chunk+chunk])
 
 	fs, data = read('training330.wav')
 
-	for i in range(0, 1200):
+	for i in range(0, 3000):
 		timedata.append(data[i*chunk:i*chunk+chunk])
 
 	timedata = np.array(timedata)
@@ -58,13 +58,13 @@ def prepare_data(filename):
 		amps.append(localmax(row, round_freqs))
 
 	y = []
-	for i in range(0, 1200):
+	for i in range(0, 3000):
 		y.append([1, 0, 0, 0])
 
-	for i in range(0, 1200):
+	for i in range(0, 3000):
 		y.append([0, 1, 0, 0])
 
-	for i in range(0, 1200):
+	for i in range(0, 3000):
 		y.append([0, 0, 1, 0])
 
 	x = np.array(amps)

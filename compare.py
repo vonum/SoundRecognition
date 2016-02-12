@@ -22,7 +22,6 @@ print np.amax(amp)
 print np.where(amp == np.amax(amp))
 print freq[np.where(amp == np.amax(amp))]
 print localmax(amp, k)
-print data[330]
 
 fs, data = read('training330.wav')
 for i in range(0, 3):
@@ -35,20 +34,7 @@ for i in range(0, 3):
 	print np.where(amp == np.amax(amp))
 	print freq[np.where(amp == np.amax(amp))]
 	print localmax(amp, k)
-	print tmpdata[330]
 
-fs, data = read('training660.wav')
-for i in range(0, 3):
-	print "SAMPLES"
-	print"----------"
-	tmpdata = data[i*chunk:i*chunk+chunk]
-	amp, freq = calculatefft(fs, tmpdata)
-	print k
-	print np.amax(amp)
-	print np.where(amp == np.amax(amp))
-	print freq[np.where(amp == np.amax(amp))]
-	print localmax(amp, k)
-	print tmpdata[660]
 
 #data = data[0:9600]
 #amp, freq = calculatefft(fs, data)
