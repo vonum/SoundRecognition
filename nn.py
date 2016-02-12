@@ -8,7 +8,7 @@ ann = Sequential()
 
 ann.add(Dense(input_dim=5, output_dim=64,init="glorot_uniform"))
 ann.add(Activation("sigmoid"))
-ann.add(Dense(input_dim=64, output_dim=1,init="glorot_uniform"))
+ann.add(Dense(input_dim=64, output_dim=2,init="glorot_uniform"))
 ann.add(Activation("sigmoid"))
 
 # definisanje parametra algoritma za obucavanje
@@ -20,11 +20,17 @@ x = []
 x.append([1, 2, 3, 4, 5])
 x.append([1, 2, 3, 3, 5])
 x.append([2, 2, 3, 4, 5])
+x.append([2431, 231321, 421, 341, 13])
+x.append([0, 0, 0, 0, 0])
+x.append([214, 13, 52, -15, 0])
 X = np.array(x)
 y = []
 y.append([1])
 y.append([1])
 y.append([1])
+y.append([2])
+y.append([2])
+y.append([2])
 Y = np.array(y)
 print X, Y
 ann.fit(X, Y, nb_epoch=500, batch_size=1, verbose = 0, shuffle=False, show_accuracy = False)

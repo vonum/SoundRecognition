@@ -1,19 +1,58 @@
 from scipy.io.wavfile import read
 import numpy as np
 from fft import calculatefft
+from localmax import localmax
 
 test = np.array([264, 297, 330, 352, 396, 440, 495, 528, 594, 660, 704, 792, 880, 990, 1056])
 
-fs, data = read('training440.wav')
 
-print np.amax(data)
+print "TEST"
+print "-----------------"
+fs, data = read('330test.wav')
+data  = data[0:9600]
 
-data = calculatefft(fs, data)[0]
+T = len(data)/float(fs)
+k = test * T
+chunk = 9600
 
-scale = np.amax(data)
+amp, freq = calculatefft(fs, data)
 
-fst, datat = read('test.wav')
-datat = calculatefft(fst, datat)[0]
+print k
+print np.amax(amp)
+print np.where(amp == np.amax(amp))
+print freq[np.where(amp == np.amax(amp))]
+print localmax(amp, k)
+print data[330]
 
-print data[test]/scale
-print datat[test]/scale
+fs, data = read('training330.wav')
+for i in range(0, 3):
+	print "SAMPLES"
+	print"----------"
+	tmpdata = data[i*chunk:i*chunk+chunk]
+	amp, freq = calculatefft(fs, tmpdata)
+	print k
+	print np.amax(amp)
+	print np.where(amp == np.amax(amp))
+	print freq[np.where(amp == np.amax(amp))]
+	print localmax(amp, k)
+	print tmpdata[330]
+
+fs, data = read('training660.wav')
+for i in range(0, 3):
+	print "SAMPLES"
+	print"----------"
+	tmpdata = data[i*chunk:i*chunk+chunk]
+	amp, freq = calculatefft(fs, tmpdata)
+	print k
+	print np.amax(amp)
+	print np.where(amp == np.amax(amp))
+	print freq[np.where(amp == np.amax(amp))]
+	print localmax(amp, k)
+	print tmpdata[660]
+
+#data = data[0:9600]
+#amp, freq = calculatefft(fs, data)
+#print np.amax(amp)
+#print np.where(amp == np.amax(amp))
+#print amp[33], amp[32], amp[34]
+
