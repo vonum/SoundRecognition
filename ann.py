@@ -35,3 +35,9 @@ def create_and_train():
 	ann.compile(loss='mean_squared_error', optimizer=sgd)
 
 	ann.fit(X, Y, nb_epoch=3000, batch_size=100, verbose = 0, shuffle=False, show_accuracy = False)
+
+	#json_string = ann.to_json()
+	#open('model/model.json', 'w').write(json_string)
+	#ann.save_weights('model/weights.h5')
+
+	return ann

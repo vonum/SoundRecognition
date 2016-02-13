@@ -4,7 +4,10 @@ import pyaudio
 from pl import Player
 from apple import Apple
 from recordinput import record
-from ann import getAnn
+from ann import get_ann
+import numpy as np
+from fft import calculatefft
+from localmax import localmax
 
 def texts(score):
    font=pygame.font.Font(None,30)
@@ -12,6 +15,12 @@ def texts(score):
    screen.blit(scoretext, (200, 200))
 
 ann = get_ann()
+
+test = np.array([264, 297, 330, 352, 396, 440, 495, 528, 594, 660, 704, 792, 880, 990, 1056])
+
+T = 0.1
+test = test * T
+test = np.round(test, 0)
 
 pygame.init()
 screen = pygame.display.set_mode((400, 300))
@@ -22,7 +31,6 @@ CHUNK = 9600
 FORMAT = pyaudio.paInt16
 CHANNELS = 1
 RATE = 96000
-RECORD_SECONDS = 1
 
 p = pyaudio.PyAudio()
 
@@ -53,6 +61,14 @@ while not done:
 			pl.orientation = 3
 
 	a = record(p, stream)
+	a = calculatefft(RATE, a)[0]
+	
+	amptest = []
+	amptest.append(localmax(a, test.astype(np.int64)))
+
+	res = ann.predict(np.array(amptest))
+
+	a = np.argmax(res)
 
 	pl.move()
 	if(pl.checkApple(ap)):
@@ -60,7 +76,7 @@ while not done:
 			
 	screen.fill((0, 0, 0))
 
-	texts(a.shape)
+	texts(a)
 
 	pygame.draw.rect(screen, (200, 100, 50), pygame.Rect(pl.pos_x, pl.pos_y, pl.size, pl.size))
 	pygame.draw.rect(screen, (10, 100, 0), pygame.Rect(ap.pos_x, ap.pos_y, ap.size, ap.size))

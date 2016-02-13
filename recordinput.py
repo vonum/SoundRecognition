@@ -57,13 +57,13 @@ def record(p, stream):
 	RATE = 96000
 	RECORD_SECONDS = 0.1
 
-	frames = []
-
+	frames = [] # A python-list of chunks(numpy.ndarray)
 	for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
-		data = stream.read(CHUNK)
-		frames.append(data)
- 
-	return np.fromstring(data, 'Float64')
+	    data = stream.read(CHUNK)
+	    frames.append(np.fromstring(data, dtype=np.int16))
+
+	#Convert the list of numpy-arrays into a 1D array (column-wise)
+	return np.hstack(frames)
 
 
 if __name__ == '__main__':
