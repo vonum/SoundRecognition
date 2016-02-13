@@ -3,7 +3,7 @@ import numpy as np
 from fft import calculatefft
 from localmax import localmax
 
-def prepare_data(filename):
+def prepare_data():
 
 	freqs = np.array([264, 297, 330, 352, 396, 440, 495, 528, 594, 660, 704, 792, 880, 990, 1056]) 	#odredjivanje potrebnih frekvencija
 	#freqs = np.array(np.exp(np.linspace(np.log(264), np.log(1056), 15)))						
@@ -25,7 +25,8 @@ def prepare_data(filename):
 
 	timedata = [] 	#sample-ovi, svaki red je 9600 samplova
 	#prvi ton
-	fs, data = read(filename, mmap=False)
+	#fs, data = read(filename, mmap=False)
+	fs, data = read('training440')
 
 	for i in range(0, 3000):
 		timedata.append(data[i*chunk:i*chunk+chunk])

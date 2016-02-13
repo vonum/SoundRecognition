@@ -3,10 +3,9 @@
 import pyaudio
 import wave
 import sys
-	
-#print sys.argv[1]
+import numpy as np
 
-def record(filename):
+def recordandsave(filename):
 
 	CHUNK = 1024
 	FORMAT = pyaudio.paInt16
@@ -29,9 +28,12 @@ def record(filename):
 
 	for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
 		data = stream.read(CHUNK)
+		print len(data)
 		frames.append(data)
 
 	print("* done recording")
+
+	print len(frames)
 
 	stream.stop_stream()
 	stream.close()
@@ -47,5 +49,22 @@ def record(filename):
 	wf.writeframes(b''.join(frames))
 	wf.close()
 
+def record(p, stream):
+
+	CHUNK = 9600
+	FORMAT = pyaudio.paInt16
+	CHANNELS = 1
+	RATE = 96000
+	RECORD_SECONDS = 0.1
+
+	frames = []
+
+	for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
+		data = stream.read(CHUNK)
+		frames.append(data)
+ 
+	return np.fromstring(data, 'Float64')
+
+
 if __name__ == '__main__':
-	record(sys.argv[1])
+	recordandsave(sys.argv[1])

@@ -1,4 +1,4 @@
-from recordinput import record
+from recordinput import recordandsave
 import sys
 
 def recordinputs(name):
