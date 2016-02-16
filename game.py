@@ -40,7 +40,7 @@ stream = p.open(format=FORMAT,
 				input=True,
 				frames_per_buffer=CHUNK)
 
-pl = Player(0, 0, 15, 15, 0)
+pl = Player(0, 0, 15, 3, 0)
 ap = Apple(0, 0, 5)
 
 while not done:
@@ -69,6 +69,9 @@ while not done:
 	res = ann.predict(np.array(amptest))
 
 	a = np.argmax(res)
+	b = np.amax(res)
+	if b > 0.9:
+		pl.orientation = a
 
 	pl.move()
 	if(pl.checkApple(ap)):
