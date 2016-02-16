@@ -26,7 +26,7 @@ def prepare_data():
 	timedata = [] 	#sample-ovi, svaki red je 9600 samplova
 	#prvi ton
 	#fs, data = read(filename, mmap=False)
-	fs, data = read('training440')
+	fs, data = read('training440.wav')
 
 	for i in range(0, 3000):
 		timedata.append(data[i*chunk:i*chunk+chunk])
@@ -41,6 +41,11 @@ def prepare_data():
 
 	for i in range(0, 3000):
 		timedata.append(data[i*chunk:i*chunk+chunk])
+
+	fs, data = read('training990.wav')
+
+	for i in range(0, 3000):
+		timedata.append(data[i*chunk:i*chunk+chunk])	
 
 	timedata = np.array(timedata)
 
@@ -67,6 +72,9 @@ def prepare_data():
 
 	for i in range(0, 3000):
 		y.append([0, 0, 1, 0])
+
+	for i in range(0, 3000):
+		y.append([0, 0, 0, 1])
 
 	x = np.array(amps)
 	y = np.array(y)

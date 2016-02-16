@@ -2,11 +2,13 @@ from keras.models import Sequential
 from keras.layers.core import Dense,Activation
 from keras.optimizers import SGD
 from keras.models import model_from_json
+import numpy as np
+from preparefortraining import prepare_data
 
 
 def get_ann():
-	ann = model_from_json(open('model/model.json').read())
-	ann.load_weights('model/weights.h5')
+	ann = model_from_json(open('model/model2.json').read())
+	ann.load_weights('model/weights2.h5')
 
 	return ann
 
@@ -36,8 +38,8 @@ def create_and_train():
 
 	ann.fit(X, Y, nb_epoch=3000, batch_size=100, verbose = 0, shuffle=False, show_accuracy = False)
 
-	#json_string = ann.to_json()
-	#open('model/model.json', 'w').write(json_string)
-	#ann.save_weights('model/weights.h5')
+	json_string = ann.to_json()
+	open('model/model2.json', 'w').write(json_string)
+	ann.save_weights('model/weights2.h5')
 
 	return ann

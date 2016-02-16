@@ -8,6 +8,7 @@ import numpy as np
 from fft import calculatefft
 from localmax import localmax
 from ann import get_ann
+from ann import create_and_train
 
 test = np.array([264, 297, 330, 352, 396, 440, 495, 528, 594, 660, 704, 792, 880, 990, 1056])
 
@@ -18,7 +19,7 @@ test = np.round(test, 0)
 #freqs = np.array(np.exp(np.linspace(np.log(264), np.log(1056), 15)))
 #round_freqs = np.round(freqs, 0)
 
-ann = get_ann()
+ann = create_and_train()
 
 amptest = []
 
@@ -143,6 +144,3 @@ amptest.append(localmax(testfft, test.astype(np.int64)))
 result = ann.predict(np.array((amptest[0], amptest[1], amptest[2], amptest[3], amptest[4], amptest[5], amptest[6], amptest[7], amptest[8], amptest[9], amptest[10], amptest[11], amptest[12], amptest[13], amptest[14])))
 print result
 
-
-
-#print amps[0]
