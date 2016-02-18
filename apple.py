@@ -8,6 +8,6 @@ class Apple:
 		self.size = size
 		
 	def generatePosition(self):
-		self.pos_x = random.randint(0, 50)
-		self.pos_y = random.randint(0, 50)
+		self.pos_x = random.randint(0, 390)
+		self.pos_y = random.randint(0, 290)
 	

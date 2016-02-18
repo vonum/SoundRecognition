@@ -6,13 +6,18 @@ from apple import Apple
 from recordinput import record
 from ann import get_ann
 import numpy as np
-from fft import calculatefft
-from localmax import localmax
+from utils import calculatefft
+from utils import adaptivelocalmax
+from numpy import sqrt, square, mean
 
 def texts(score):
    font=pygame.font.Font(None,30)
    scoretext=font.render("Score:"+str(score), 1,(255,255,255))
-   screen.blit(scoretext, (200, 200))
+   screen.blit(scoretext, (300, 20))
+
+def renderSnake(pl):
+	for row in pl.pos:
+		pygame.draw.rect(screen, (200, 100, 50), pygame.Rect(row[0], row[1], pl.size, pl.size))
 
 ann = get_ann()
 
@@ -40,8 +45,8 @@ stream = p.open(format=FORMAT,
 				input=True,
 				frames_per_buffer=CHUNK)
 
-pl = Player(0, 0, 15, 3, 0)
-ap = Apple(0, 0, 5)
+pl = Player(0, 0, 10, 10, 0)
+ap = Apple(0, 0, 10)
 
 while not done:
 	for event in pygame.event.get():
@@ -61,10 +66,11 @@ while not done:
 			pl.orientation = 3
 
 	a = record(p, stream)
+	#rms = sqrt(mean(square(a)))
 	a = calculatefft(RATE, a)[0]
 	
 	amptest = []
-	amptest.append(localmax(a, round_freqs.astype(np.int64)))
+	amptest.append(adaptivelocalmax(a, round_freqs.astype(np.int64)))
 
 	res = ann.predict(np.array(amptest))
 
@@ -79,10 +85,11 @@ while not done:
 			
 	screen.fill((0, 0, 0))
 
-	texts(a)
+	texts(pl.score)
 
-	pygame.draw.rect(screen, (200, 100, 50), pygame.Rect(pl.pos_x, pl.pos_y, pl.size, pl.size))
-	pygame.draw.rect(screen, (10, 100, 0), pygame.Rect(ap.pos_x, ap.pos_y, ap.size, ap.size))
+	renderSnake(pl)
+	#pygame.draw.rect(screen, (200, 100, 50), pygame.Rect(pl.pos[0][0], pl.pos[0][1], pl.size, pl.size))
+	pygame.draw.rect(screen, (255, 255, 0), pygame.Rect(ap.pos_x, ap.pos_y, ap.size, ap.size))
 	
 	pygame.display.flip()
 	#time.sleep(0.2)
