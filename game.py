@@ -46,7 +46,7 @@ stream = p.open(format=FORMAT,
 				frames_per_buffer=CHUNK)
 
 pl = Player(0, 0, 10, 10, 0)
-ap = Apple(0, 0, 10)
+ap = Apple(10)
 
 while not done:
 	for event in pygame.event.get():
@@ -76,7 +76,7 @@ while not done:
 
 	a = np.argmax(res)
 	b = np.amax(res)
-	if b > 0.95:
+	if b > 0.98:
 		pl.orientation = a
 
 	pl.move()

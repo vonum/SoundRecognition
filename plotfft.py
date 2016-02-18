@@ -29,7 +29,6 @@ k = test * T
 print k
 print np.amax(amp)
 print np.where(amp == np.amax(amp))
-print frq[144710]
 
 #print round_freqs.astype(np.int64)
 
