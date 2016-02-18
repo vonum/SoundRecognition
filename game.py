@@ -16,11 +16,11 @@ def texts(score):
 
 ann = get_ann()
 
-test = np.array([264, 297, 330, 352, 396, 440, 495, 528, 594, 660, 704, 792, 880, 990, 1056])
+freqs = np.array(np.exp(np.linspace(np.log(264), np.log(2000), 150)))
+round_freqs = np.round(freqs, 0)
 
 T = 0.1
-test = test * T
-test = np.round(test, 0)
+round_freqs = round_freqs * T
 
 pygame.init()
 screen = pygame.display.set_mode((400, 300))
@@ -64,13 +64,13 @@ while not done:
 	a = calculatefft(RATE, a)[0]
 	
 	amptest = []
-	amptest.append(localmax(a, test.astype(np.int64)))
+	amptest.append(localmax(a, round_freqs.astype(np.int64)))
 
 	res = ann.predict(np.array(amptest))
 
 	a = np.argmax(res)
 	b = np.amax(res)
-	if b > 0.9:
+	if b > 0.95:
 		pl.orientation = a
 
 	pl.move()

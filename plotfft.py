@@ -11,8 +11,6 @@ fs, data = read(sys.argv[1], mmap=False)
 
 amp, frq = calculatefft(fs, data)
 
-print frq[672]
-
 plt.xlabel('frequency')
 plt.ylabel('amplitude')
 plt.plot(frq, amp)
@@ -33,6 +31,7 @@ k = test * T
 print k
 print np.amax(amp)
 print np.where(amp == np.amax(amp))
+print frq[144710]
 
 #print round_freqs.astype(np.int64)
 

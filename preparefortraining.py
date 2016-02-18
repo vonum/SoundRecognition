@@ -2,6 +2,7 @@ from scipy.io.wavfile import read
 import numpy as np
 from fft import calculatefft
 from localmax import localmax
+from localmax import adaptivelocalmax
 
 def prepare_data():
 
@@ -62,6 +63,71 @@ def prepare_data():
 	for row in fftdata:																			#uzimanje odgovarajucih amplituda za frekvencije
 		#amps.append(row[round_freqs])
 		amps.append(localmax(row, round_freqs))
+
+	y = []
+	for i in range(0, 3000):
+		y.append([1, 0, 0, 0])
+
+	for i in range(0, 3000):
+		y.append([0, 1, 0, 0])
+
+	for i in range(0, 3000):
+		y.append([0, 0, 1, 0])
+
+	for i in range(0, 3000):
+		y.append([0, 0, 0, 1])
+
+	x = np.array(amps)
+	y = np.array(y)
+
+	return x, y
+
+def prepare_harder():
+
+	freqs = np.array(np.exp(np.linspace(np.log(264), np.log(2000), 150)))
+	round_freqs = np.round(freqs, 0)
+
+	T = 0.1 #n/fs = 9600/96000
+	chunk = 9600
+
+	round_freqs = round_freqs * T #indeski frekvencija
+
+	timedata = [] 	#sample-ovi, svaki red je 9600 samplova
+
+	#prvi ton
+	fs, data = read('trainingG4.wav')
+
+	for i in range(0, 3000):
+		timedata.append(data[i*chunk:i*chunk+chunk])
+
+	#drugi ton
+	fs, data = read('trainingF5.wav')
+
+	for i in range(0, 3000):
+		timedata.append(data[i*chunk:i*chunk+chunk])
+
+	fs, data = read('trainingD6.wav')
+
+	for i in range(0, 3000):
+		timedata.append(data[i*chunk:i*chunk+chunk])
+
+	fs, data = read('trainingA6.wav')
+
+	for i in range(0, 3000):
+		timedata.append(data[i*chunk:i*chunk+chunk])	
+
+	timedata = np.array(timedata)
+
+	fftdata = []
+
+	for row in timedata:																		#za svaki zvuk se racuna fft
+		fftdata.append(calculatefft(fs, row)[0])
+
+	amps = []	
+
+	for row in fftdata:																			#uzimanje odgovarajucih amplituda za frekvencije
+		#amps.append(row[round_freqs])
+		amps.append(adaptivelocalmax(row, round_freqs))
 
 	y = []
 	for i in range(0, 3000):

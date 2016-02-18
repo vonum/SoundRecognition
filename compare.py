@@ -8,7 +8,7 @@ test = np.array([264, 297, 330, 352, 396, 440, 495, 528, 594, 660, 704, 792, 880
 
 print "TEST"
 print "-----------------"
-fs, data = read('330test.wav')
+fs, data = read('test/330test.wav')
 data  = data[0:9600]
 
 T = len(data)/float(fs)
@@ -17,6 +17,9 @@ chunk = 9600
 
 amp, freq = calculatefft(fs, data)
 
+print T
+print len(data)
+print fs
 print k
 print np.amax(amp)
 print np.where(amp == np.amax(amp))
