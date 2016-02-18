@@ -1,12 +1,11 @@
-from preparefortraining import prepare_data
 from keras.models import Sequential
 from keras.layers.core import Dense,Activation
 from keras.optimizers import SGD
-import sys
 from scipy.io.wavfile import read
 import numpy as np
-from fft import calculatefft
-from localmax import localmax
+from preparefortraining import prepare_data
+from utils import calculatefft
+from utils import localmax
 from ann import get_ann
 from ann import create_and_train
 

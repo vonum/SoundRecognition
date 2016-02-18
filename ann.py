@@ -5,9 +5,9 @@ from keras.models import model_from_json
 import numpy as np
 from preparefortraining import prepare_data
 from preparefortraining import prepare_harder
-from localmax import adaptivelocalmax
 from scipy.io.wavfile import read
-from fft import calculatefft
+from utils import calculatefft
+from utils import adaptivelocalmax
 
 
 def get_ann():
@@ -17,12 +17,6 @@ def get_ann():
 	return ann
 
 def create_and_train():
-
-	#test = np.array([264, 297, 330, 352, 396, 440, 495, 528, 594, 660, 704, 792, 880, 990, 1056])
-
-	#T = 0.1
-	#test = test * T
-	#test = np.round(test, 0)
 
 	X, Y = prepare_data()
 	print X.shape
@@ -43,12 +37,12 @@ def create_and_train():
 	ann.fit(X, Y, nb_epoch=3000, batch_size=100, verbose = 0, shuffle=False, show_accuracy = False)
 
 	json_string = ann.to_json()
-	open('model/model2.json', 'w').write(json_string)
-	ann.save_weights('model/weights2.h5')
+	open('model/model.json', 'w').write(json_string)
+	ann.save_weights('model/weights.h5')
 
 	return ann
 
-def train_harder():
+def create_and_train_harder():
 
 	X, Y = prepare_harder()
 
@@ -89,35 +83,35 @@ def test_harder():
 
 	amptest = []
 
-	fst, datat = read('testA6.wav', mmap = False)
+	fst, datat = read('test/testA6.wav', mmap = False)
 	datat = datat[0:9600]
 	testfft = calculatefft(fst, datat)[0]
 
 	#amptest.append(testfft[test.astype(np.int64)])
 	amptest.append(adaptivelocalmax(testfft, round_freqs))
 
-	fst, datat = read('testG4.wav', mmap = False)
+	fst, datat = read('test/testG4.wav', mmap = False)
 	datat = datat[0:9600]
 	testfft = calculatefft(fst, datat)[0]
 
 	#amptest.append(testfft[test.astype(np.int64)])
 	amptest.append(adaptivelocalmax(testfft, round_freqs))
 
-	fst, datat = read('testF5.wav', mmap = False)
+	fst, datat = read('test/testF5.wav', mmap = False)
 	datat = datat[0:9600]
 	testfft = calculatefft(fst, datat)[0]
 
 	#amptest.append(testfft[test.astype(np.int64)])
 	amptest.append(adaptivelocalmax(testfft, round_freqs))
 
-	fst, datat = read('testD6.wav', mmap = False)
+	fst, datat = read('test/testD6.wav', mmap = False)
 	datat = datat[0:9600]
 	testfft = calculatefft(fst, datat)[0]
 
 	#amptest.append(testfft[test.astype(np.int64)])
 	amptest.append(adaptivelocalmax(testfft, round_freqs))
 
-	fst, datat = read('testB4.wav', mmap = False)
+	fst, datat = read('test/testB4.wav', mmap = False)
 	datat = datat[0:9600]
 	testfft = calculatefft(fst, datat)[0]
 

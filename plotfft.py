@@ -1,11 +1,9 @@
 import scipy
 from scipy.io.wavfile import read
 import matplotlib.pyplot as plt
-from scipy.fftpack import fft
-from scipy import arange
 import numpy as np
 import sys
-from fft import calculatefft
+from utils import calculatefft
 
 fs, data = read(sys.argv[1], mmap=False)
 
